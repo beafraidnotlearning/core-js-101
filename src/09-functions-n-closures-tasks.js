@@ -63,7 +63,8 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom(...params) {
-  return (x) => (params.length ? params.slice().reverse().reduce((acc, cv, index) => acc + cv * (x ** index), 0) : null);
+  return (x) => (params.length ? params.slice().reverse()
+    .reduce((acc, cv, index) => acc + cv * (x ** index), 0) : null);
 }
 
 
@@ -103,16 +104,18 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
+  let fun = func;
+  let att = attempts;
   return function f() {
     try {
-      func = func();
-      attempts -= 1;
+      fun = fun();
+      att -= 1;
     } catch (e) {
-      if (attempts !== 0) {
+      if (att !== 0) {
         f();
       }
     }
-    return func;
+    return fun;
   };
 }
 

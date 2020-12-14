@@ -122,7 +122,8 @@ function isTriangle(a, b, c) {
  *
  */
 function doRectanglesOverlap(rect1, rect2) {
-  return rect1.top < rect2.top + rect2.height && rect1.top + rect1.height > rect2.top && rect1.left + rect1.width > rect2.left && rect1.left < rect2.left + rect2.width;
+  return rect1.top < rect2.top + rect2.height && rect1.top + rect1.height > rect2.top
+  && rect1.left + rect1.width > rect2.left && rect1.left < rect2.left + rect2.width;
 }
 
 
@@ -312,13 +313,14 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
-  while (str.indexOf('<>') !== -1 || str.indexOf('[]') !== -1 || str.indexOf('()') !== -1 || str.indexOf('{}') !== -1) {
-    str = str.replace('<>', '');
-    str = str.replace('[]', '');
-    str = str.replace('()', '');
-    str = str.replace('{}', '');
+  let s = str;
+  while (s.indexOf('<>') !== -1 || s.indexOf('[]') !== -1 || s.indexOf('()') !== -1 || s.indexOf('{}') !== -1) {
+    s = s.replace('<>', '');
+    s = s.replace('[]', '');
+    s = s.replace('()', '');
+    s = s.replace('{}', '');
   }
-  return str.length === 0;
+  return s.length === 0;
 }
 
 
@@ -344,10 +346,11 @@ function isBracketsBalanced(str) {
  */
 function toNaryString(num, n) {
   let result = '';
+  let number = num;
   const arrayN = new Array(n).fill(1).map((el, index) => index);
-  while (num > 0) {
-    result += arrayN[num % n];
-    num = Math.floor(num / n);
+  while (number > 0) {
+    result += arrayN[number % n];
+    number = Math.floor(number / n);
   }
   return result.split('').reverse().join('');
 }
@@ -366,17 +369,17 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-  pathes = pathes.map((el) => el.split('/'));
+  const path = pathes.map((el) => el.split('/'));
   const result = [];
   let flag = true;
-  for (let j = 0; j < pathes[0].length && flag; j++) {
-    for (let i = 1; i < pathes.length; i++) {
-      if (pathes[i][j] !== pathes[0][j]) {
+  for (let j = 0; j < path[0].length && flag; j += 1) {
+    for (let i = 1; i < path.length; i += 1) {
+      if (path[i][j] !== path[0][j]) {
         flag = false;
       }
     }
     if (flag) {
-      result.push(pathes[0][j]);
+      result.push(path[0][j]);
     }
   }
   return result.length !== 0 ? `${result.join('/')}/` : '';
@@ -405,7 +408,8 @@ function getCommonDirectoryPath(pathes) {
  */
 function getMatrixProduct(m1, m2) {
   return new Array(m1.length).fill(new Array(m2[0].length).fill(0))
-    .map((el, index) => el.map((el1, index1) => new Array(m2.length).fill(0).reduce((acc, cv, index2) => acc + m1[index][index2] * m2[index2][index1], 0)));
+    .map((el, index) => el.map((el1, index1) => new Array(m2.length)
+      .fill(0).reduce((acc, cv, index2) => acc + m1[index][index2] * m2[index2][index1], 0)));
 }
 
 
@@ -445,15 +449,17 @@ function getMatrixProduct(m1, m2) {
  */
 function evaluateTicTacToePosition(position) {
   const array = ['012', '036', '048', '147', '246', '258', '345', '678'];
-  for (let i = 0; i < position.length; i++) {
-    for (let j = 0; j < position.length; j++) {
-      if (position[i][j] === undefined) {
-        position[i][j] = '';
+  let pos = position;
+  for (let i = 0; i < pos.length; i += 1) {
+    for (let j = 0; j < pos.length; j += 1) {
+      if (pos[i][j] === undefined) {
+        pos[i][j] = '';
       }
     }
   }
-  position = position.flat();
-  return ['X', '0'].filter((letter) => array.filter((el) => el.split('').reduce((acc, el1) => (position[el1] === letter ? acc + 1 : acc), 0) === 3).length !== 0)[0];
+  pos = pos.flat();
+  return ['X', '0'].filter((letter) => array.filter((el) => el.split('')
+    .reduce((acc, el1) => (pos[el1] === letter ? acc + 1 : acc), 0) === 3).length !== 0)[0];
 }
 
 

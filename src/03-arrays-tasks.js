@@ -480,7 +480,8 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  return new Array(n).fill(new Array(n).fill(0)).map((el, index) => el.map((el1, index1) => (index === index1 ? 1 : el1)));
+  return new Array(n).fill(new Array(n).fill(0))
+    .map((el, index) => el.map((el1, index1) => (index === index1 ? 1 : el1)));
 }
 
 /**
@@ -512,7 +513,7 @@ function getIntervalArray(start, end) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(arr) {
-  arr = arr.sort((a, b) => {
+  const array = arr.sort((a, b) => {
     if (a > b) {
       return 1;
     }
@@ -521,7 +522,7 @@ function distinct(arr) {
     }
     return 0;
   });
-  return arr.filter((el, index) => index + 1 === arr.length || el !== arr[index + 1]);
+  return array.filter((el, index) => index + 1 === array.length || el !== array[index + 1]);
 }
 
 /**
@@ -555,8 +556,10 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-  return array.reduce((acc, cv) => (acc.indexOf(keySelector(cv)) === -1 ? acc.concat(keySelector(cv)) : acc), [])
-    .map((el) => [el, array.filter((element) => keySelector(element) === el).map((element) => valueSelector(element))]);
+  return array.reduce((acc, cv) => (acc.indexOf(keySelector(cv)) === -1
+    ? acc.concat(keySelector(cv)) : acc), [])
+    .map((el) => [el, array.filter((element) => keySelector(element) === el)
+      .map((element) => valueSelector(element))]);
 }
 
 
@@ -625,7 +628,8 @@ function swapHeadAndTail(arr) {
   if (arr.length % 2 === 0) {
     return arr.slice(arr.length / 2).concat(arr.slice(0, arr.length / 2));
   }
-  return arr.slice((arr.length + 1) / 2).concat(arr[(arr.length - 1) / 2], arr.slice(0, (arr.length - 1) / 2));
+  return arr.slice((arr.length + 1) / 2)
+    .concat(arr[(arr.length - 1) / 2], arr.slice(0, (arr.length - 1) / 2));
 }
 
 
